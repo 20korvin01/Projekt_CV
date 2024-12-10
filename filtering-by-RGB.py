@@ -33,7 +33,7 @@ def process_images(input_folder, output_folder):
             print(f"Saved mask for {filename}")
 
 #Input and output folders
-input_folder = r"Desktop\DSC_0579-hsv.png"
-output_folder = r"Desktop\TEST"
+input_folder = "Rain Datasets/flash downsized"
+output_folder = "Output/flash"
 
 process_images(input_folder, output_folder)
