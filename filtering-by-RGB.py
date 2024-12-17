@@ -33,7 +33,7 @@ def process_images(input_folder, output_folder):
             print(f"Saved mask for {filename}")
 
 #Input and output folders
-input_folder = "Rain Datasets/flash downsized"
-output_folder = "Output/flash"
+input_folder = "Rain Datasets/no_flash downsized"
+output_folder = "Output/no_flash"
 
 process_images(input_folder, output_folder)
