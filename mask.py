@@ -39,8 +39,8 @@ for filename in os.listdir(input_folder):
     # image to grayscale
     img_gray = cv.cvtColor(img_rgb, cv.COLOR_RGB2GRAY)
 
-    # image to hsv
-    img_hsv = cv.cvtColor(img_rgb, cv.COLOR_RGB2HSV)
+    # # image to hsv
+    # img_hsv = cv.cvtColor(img_rgb, cv.COLOR_RGB2HSV)
 
     # apply primitive thresholding
     primitive_mask = primitive_thresholding(img_gray, 250, 255)
@@ -55,14 +55,19 @@ for filename in os.listdir(input_folder):
     closing_mask = closing(primitive_mask, 9)
     closing_mask_inv = cv.bitwise_not(closing_mask)
     
-    # save closing_mask
-    output_path = os.path.join(output_folder, f"{os.path.splitext(filename)[0]}.png")
-    cv.imwrite(output_path, closing_mask_inv)
+    # # save closing_mask
+    # output_path = os.path.join(output_folder, f"{os.path.splitext(filename)[0]}.png")
+    # cv.imwrite(output_path, closing_mask_inv)
     
     print(f"Saved mask for {filename}")
     
     # calculate connected components
     num_labels, labels, stats, centroids = connected_components(closing_mask)
+    np.savetxt(f"Output/flash/connected_components/stats/{os.path.splitext(filename)[0]}.txt", stats, fmt='%d')
+    np.savetxt(f"Output/flash/connected_components/centroids/{os.path.splitext(filename)[0]}.txt", centroids, fmt='%d')
+    np.savetxt(f"Output/flash/connected_components/labels/{os.path.splitext(filename)[0]}.txt", labels, fmt='%d')
+    
+    
     # print(num_labels)
     # print(labels)
     # print(stats)
@@ -74,15 +79,15 @@ for filename in os.listdir(input_folder):
     # np.savetxt("labels.txt", labels, fmt='%d')  
         
     
-    # Visualize components by coloring them
-    colored_components = np.zeros((*closing_mask.shape, 3), dtype=np.uint8)
-    for i in range(1, num_labels):  # Skip background
-        color = (np.random.randint(0, 255), np.random.randint(0, 255), np.random.randint(0, 255))
-        colored_components[labels == i] = color
+    # # Visualize components by coloring them
+    # colored_components = np.zeros((*closing_mask.shape, 3), dtype=np.uint8)
+    # for i in range(1, num_labels):  # Skip background
+    #     color = (np.random.randint(0, 255), np.random.randint(0, 255), np.random.randint(0, 255))
+    #     colored_components[labels == i] = color
 
-    # save colored_components
-    path = os.path.join("Output/flash/colored_components", f"{os.path.splitext(filename)[0]}.png")
-    cv.imwrite(path, colored_components)
+    # # save colored_components
+    # path = os.path.join("Output/flash/colored_components", f"{os.path.splitext(filename)[0]}.png")
+    # cv.imwrite(path, colored_components)
     
     # break
     
