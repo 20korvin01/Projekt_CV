@@ -1,42 +1,36 @@
-import cv2 as cv
 import numpy as np
+import cv2
 import matplotlib.pyplot as plt
+import os
 
-from scipy.spatial import Delaunay
+for filename in os.listdir("Output/flash/connected_components/stats"):
+    # load stats.txt
+    stats = np.loadtxt(f"Output/flash/connected_components/stats/{filename}", dtype=int, delimiter=' ')
+    num_labels = stats.shape[0]
+    # load labels.txt
+    labels = np.loadtxt(f"Output/flash/connected_components/labels/{filename}", dtype=int, delimiter=' ')
+    # get area column
+    area = stats[:, 4]
+    # store all area values smaller than 1000
+    posbl_drops = area[area < 1000]
+    # store all area values greater than 1000
+    no_drops = area[area >= 1000]
+    no_drops_idx = np.array(np.where(area >= 1000))[0]
 
-
-def primitive_thresholding(image, lower, upper):
-    '''Thresholding using a simple lower and upper threshold'''
-    _, thresh_mask = cv.threshold(image, lower, upper, cv.THRESH_BINARY_INV)
-    return thresh_mask
-
-def adaptive_thresholding(image, droplet_size, constant):
-    '''Adaptive thresholding using cv2.adaptiveThreshold'''
-    thresh_mask = cv.adaptiveThreshold(image, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY_INV, droplet_size, constant)
-    return thresh_mask
-
-
-
-# read the image
-img = cv.imread('Rain Datasets/flash downsized/DSC_0565.png')
-
-# image to grayscale
-img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-
-# apply primitive thresholding
-primitive_mask = primitive_thresholding(img, 250, 255)
-# apply adaptive thresholding
-mask = adaptive_thresholding(img, 11, 2)
-
-# display img, primitive_mask, mask side by side
-plt.figure(figsize=(15, 5))
-plt.subplot(131)
-plt.imshow(img, cmap='gray')
-plt.title('Original Image grayscaled')
-plt.subplot(132)
-plt.imshow(primitive_mask, cmap='gray')
-plt.title('Primitive Thresholding')
-plt.subplot(133)
-plt.imshow(mask, cmap='gray')
-plt.title('Adaptive Thresholding')
-plt.show()
+    # # Visualize components only when area smaller 1000
+    colored_components = np.zeros((*labels.shape, 3), dtype=np.uint8)
+    for i in range(1, num_labels):
+        if i not in no_drops_idx:
+            color = (np.random.randint(0, 200), np.random.randint(0, 200), np.random.randint(0, 200))
+            colored_components[labels == i] = color
+        else:
+            color = (255, 0, 0)
+            colored_components[labels == i] = color
+            
+    plt.imshow(colored_components)
+    plt.title(f"Zusammenhangskomponenten | deleted (red): {no_drops_idx.shape[0]-1} + background")
+    plt.savefig(f"Output/flash/connected_components/deleted_components_1000/{os.path.splitext(filename)[0]}.png", dpi=300)
+    
+    plt.close()
+    
+    print(f"Saved image for {filename}")
