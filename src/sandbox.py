@@ -3,12 +3,12 @@ import cv2
 import matplotlib.pyplot as plt
 import os
 
-for filename in os.listdir("Output/flash/connected_components/stats"):
+for filename in os.listdir("data/Output/flash/connected_components/stats"):
     # load stats.txt
-    stats = np.loadtxt(f"Output/flash/connected_components/stats/{filename}", dtype=int, delimiter=' ')
+    stats = np.loadtxt(f"data/Output/flash/connected_components/stats/{filename}", dtype=int, delimiter=' ')
     num_labels = stats.shape[0]
     # load labels.txt
-    labels = np.loadtxt(f"Output/flash/connected_components/labels/{filename}", dtype=int, delimiter=' ')
+    labels = np.loadtxt(f"data/Output/flash/connected_components/labels/{filename}", dtype=int, delimiter=' ')
     # get area column
     area = stats[:, 4]
     # store all area values smaller than 1000
@@ -29,7 +29,7 @@ for filename in os.listdir("Output/flash/connected_components/stats"):
             
     plt.imshow(colored_components)
     plt.title(f"Zusammenhangskomponenten | deleted (red): {no_drops_idx.shape[0]-1} + background")
-    plt.savefig(f"Output/flash/connected_components/deleted_components_1000/{os.path.splitext(filename)[0]}.png", dpi=300)
+    plt.savefig(f"data/Output/flash/connected_components/deleted_components_1000/{os.path.splitext(filename)[0]}.png", dpi=300)
     
     plt.close()
     

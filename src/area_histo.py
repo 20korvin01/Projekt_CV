@@ -2,9 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-for filename in os.listdir("Output/flash/connected_components/stats"):
+for filename in os.listdir("data/Output/flash/connected_components/stats"):
     # load stats.txt
-    stats = np.loadtxt(f"Output/flash/connected_components/stats/{filename}", dtype=int, delimiter=' ')
+    stats = np.loadtxt(f"data/Output/flash/connected_components/stats/{filename}", dtype=int, delimiter=' ')
     # get area column
     area = stats[:, 4]
     # store all area values smaller than 1000

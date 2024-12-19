@@ -10,14 +10,14 @@ import os
 
 
 
-for filename in os.listdir("Output/flash/connected_components/stats")[:]:
+for filename in os.listdir("data/Output/flash/connected_components/stats")[:]:
     # load stats.txt
-    stats = np.loadtxt(f"Output/flash/connected_components/stats/{filename}", dtype=int, delimiter=' ')
+    stats = np.loadtxt(f"data/Output/flash/connected_components/stats/{filename}", dtype=int, delimiter=' ')
     num_labels = stats.shape[0]
     # load labels.txt
-    labels = np.loadtxt(f"Output/flash/connected_components/labels/{filename}", dtype=int, delimiter=' ')
+    labels = np.loadtxt(f"data/Output/flash/connected_components/labels/{filename}", dtype=int, delimiter=' ')
     # load centroids.txt
-    centroids = np.loadtxt(f"Output/flash/connected_components/centroids/{filename}", dtype=int, delimiter=' ')
+    centroids = np.loadtxt(f"data/Output/flash/connected_components/centroids/{filename}", dtype=int, delimiter=' ')
         
     # get area column
     area = stats[:, 4]
@@ -39,10 +39,10 @@ for filename in os.listdir("Output/flash/connected_components/stats")[:]:
     centroids = centroids[posbl_drops]
     # update num_labels
     num_labels = np.max(labels)
-    # save labels.txt, stats.txt and centroids.txt
-    np.savetxt(f"Output/flash/connected_components/greater_5/labels/{filename}", labels, fmt='%i')
-    np.savetxt(f"Output/flash/connected_components/greater_5/stats/{filename}", stats, fmt='%i')
-    np.savetxt(f"Output/flash/connected_components/greater_5/centroids/{filename}", centroids, fmt='%i')
+    # # save labels.txt, stats.txt and centroids.txt
+    # np.savetxt(f"data/Output/flash/connected_components/greater_5/labels/{filename}", labels, fmt='%i')
+    # np.savetxt(f"data/Output/flash/connected_components/greater_5/stats/{filename}", stats, fmt='%i')
+    # np.savetxt(f"data/Output/flash/connected_components/greater_5/centroids/{filename}", centroids, fmt='%i')
     
     
     print(f"Saved image for {filename}")

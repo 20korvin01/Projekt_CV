@@ -28,8 +28,8 @@ def connected_components(image):
 
 
 # looping through the images
-input_folder = "Rain Datasets/flash downsized"
-output_folder = "Output/flash/closing"
+input_folder = "data/Rain Datasets/flash downsized"
+output_folder = "data/Output/flash/closing"
 
 for filename in os.listdir(input_folder):
     # read the image
@@ -63,9 +63,9 @@ for filename in os.listdir(input_folder):
     
     # calculate connected components
     num_labels, labels, stats, centroids = connected_components(closing_mask)
-    np.savetxt(f"Output/flash/connected_components/stats/{os.path.splitext(filename)[0]}.txt", stats, fmt='%d')
-    np.savetxt(f"Output/flash/connected_components/centroids/{os.path.splitext(filename)[0]}.txt", centroids, fmt='%d')
-    np.savetxt(f"Output/flash/connected_components/labels/{os.path.splitext(filename)[0]}.txt", labels, fmt='%d')
+    np.savetxt(f"data/Output/flash/connected_components/stats/{os.path.splitext(filename)[0]}.txt", stats, fmt='%d')
+    np.savetxt(f"data/Output/flash/connected_components/centroids/{os.path.splitext(filename)[0]}.txt", centroids, fmt='%d')
+    np.savetxt(f"data/Output/flash/connected_components/labels/{os.path.splitext(filename)[0]}.txt", labels, fmt='%d')
     
     
     # print(num_labels)
