@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 # to speed up processing. Use zero-padding for background and non-droplet clusters
 
 # image is a greyscale
-image = cv2.imread('test.png',cv2.IMREAD_GRAYSCALE)
+image = cv2.imread('DSC_0565.png')
 
 # Apply Canny edge detection
 edges = cv2.Canny(image, threshold1=100, threshold2=200)
